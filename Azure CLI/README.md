@@ -34,3 +34,33 @@ Before creating the VM, list the existing resource groups and select one:
 
 ```bash
 az group list -o table
+
+🖥️ Step 2 — Create the Azure Virtual Machine
+
+Run the following Azure CLI command to create the VM:
+
+az vm create \
+  --resource-group devops-rg \
+  --name devops-vm \
+  --image Ubuntu2204 \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --storage-sku Standard_LRS \
+  --os-disk-size-gb 30
+
+🔎 What This Command Does
+
+Uses Ubuntu 22.04 LTS
+
+Sets VM size to Standard_B2s
+
+Creates the admin user azureuser
+
+Automatically generates SSH keys
+
+Creates a 30 GB OS disk
+
+Uses Standard_LRS storage
+
+Automatically starts the VM after creation
