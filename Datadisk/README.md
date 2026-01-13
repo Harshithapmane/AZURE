@@ -1,60 +1,65 @@
-Attach Existing Data Disk to Azure Virtual Machine
-📌 Task Overview
+# 🚀 Attach Existing Data Disk to Azure Virtual Machine
 
-Attach an existing managed data disk to an existing Azure Virtual Machine and verify it inside the Linux OS.
+---
 
-🎯 Objective
+## 📌 Task Overview
 
-Attach the existing managed disk datacenter-disk to datacenter-vm
+Attach an existing **managed data disk** to an existing **Azure Virtual Machine** and verify it inside the **Linux (Ubuntu 22.04)** operating system.
 
-Ensure the disk is successfully attached
+---
 
-Verify disk visibility inside the VM
+## 🎯 Objective
 
-Confirm VM initialization is complete
+- Attach the existing managed disk **datacenter-disk** to **datacenter-vm**
+- Ensure the disk is successfully attached
+- Verify disk visibility inside the VM
+- Confirm virtual machine initialization is complete
 
-🖥️ Method 1: Azure Portal (GUI)
-Step 1: Login to Azure Portal
+---
 
-Go to https://portal.azure.com
+## 🖥️ Method 1: Azure Portal (GUI)
 
-Sign in with provided Azure credentials
+### Step 1: Login to Azure Portal
 
-Step 2: Open the Virtual Machine
+- Go to: https://portal.azure.com  
+- Sign in using the provided Azure credentials
 
-Search for Virtual Machines
+---
 
-Select datacenter-vm
+### Step 2: Open the Virtual Machine
 
-Ensure VM status is Running
+- Search for **Virtual Machines**
+- Select **datacenter-vm**
+- Ensure the VM status is **Running**
 
-Step 3: Attach Existing Data Disk
+---
 
-In the VM menu, click Disks
+### Step 3: Attach Existing Data Disk
 
-Under Data disks, click + Add data disk
+- In the VM menu, click **Disks**
+- Under **Data disks**, click **+ Add data disk**
+- Select the existing disk: **datacenter-disk**
+- Click **Save**
+- Wait for **Update succeeded** notification
 
-Select existing disk:
-datacenter-disk
+✅ **Disk is now attached at the Azure level**
 
-Click Save
+---
 
-Wait for Update succeeded notification
+## 🔍 Verification in Azure Portal
 
-✅ Disk is now attached at the Azure level
+- Navigate to **Virtual Machine → Disks**
+- Confirm **datacenter-disk** appears under **Data disks**
+- Disk status should be **Attached**
 
-🔍 Verification in Azure Portal
+---
 
-Navigate to VM → Disks
+## 🐧 Method 2: Verify Inside Linux VM (Ubuntu 22.04)
 
-Confirm datacenter-disk appears under Data disks
+### Step 4: Connect to the VM
 
-Disk status should be Attached
-
-🐧 Method 2: Verify Inside Linux VM (Ubuntu 22.04)
-Step 4: Connect to VM
+```bash
 ssh <username>@<public-ip>
-
 Step 5: List Attached Disks
 lsblk
 
@@ -66,7 +71,7 @@ sda    30G  disk
 sdc    32G  disk
 
 
-sdc indicates the newly attached data disk
+👉 sdc indicates the newly attached data disk
 
 💾 (Optional) Initialize & Mount Disk
 Create Partition
@@ -77,7 +82,7 @@ n → new partition
 
 p → primary
 
-Press Enter for defaults
+Press Enter for default values
 
 w → write changes
 
@@ -89,19 +94,18 @@ sudo mkdir /datadisk
 sudo mount /dev/sdc1 /datadisk
 
 
-Verify:
+Verify mount:
 
 df -h
 
 ⚡ Method 3: Azure CLI (Optional)
+Attach Disk Using CLI
 az vm disk attach \
   --resource-group <RESOURCE_GROUP_NAME> \
   --vm-name datacenter-vm \
   --name datacenter-disk
 
-
-Verify:
-
+Verify Disk Attachment
 az vm show \
   --resource-group <RESOURCE_GROUP_NAME> \
   --name datacenter-vm \
@@ -122,4 +126,4 @@ az vm show \
 
 🏁 Result
 
-Successfully attached an existing managed data disk to an Azure virtual machine and verified it inside a Linux (Ubuntu 22.04) OS.
+Successfully attached an existing managed data disk to an Azure Virtual Machine and verified it inside a Linux (Ubuntu 22.04) operating system.
